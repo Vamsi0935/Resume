@@ -1,0 +1,111 @@
+{
+    "firstname": "Vamsi Krishna",
+    "surname": "Dudyala",
+    "profession": "Full Stack Developer",
+    "summary": "Experienced Frontend developer...",
+    "contact": [
+      {
+        "address": "Bachupally, Hyderabad",
+        "phoneNumber": "9391128446",
+        "email": "vamsikrishna@gmail.com",
+        "websiteLinks": [
+          {
+            "linkedIn": "https://www.linkedin.com/in/vamsi-krishna-dudyala-3188881a8",
+            "gitHub": "https://github.com/Vamsi0935"
+          }
+        ]
+      }
+    ],
+    "skills": [
+      {
+        "skillName": "HTML",
+        "proficiency": "Expert"
+      },
+      {
+        "skillName": "CSS",
+        "proficiency": "Expert"
+      },
+      {
+        "skillName": "Bootstrap",
+        "proficiency": "Expert"
+      },
+      {
+        "skillName": "JavaScript",
+        "proficiency": "Intermediate"
+      },
+      {
+        "skillName": "ReactJs",
+        "proficiency": "Expert"
+      },
+      {
+        "skillName": "NodeJs",
+        "proficiency": "Intermediate"
+      },
+      {
+        "skillName": "ExpressJs",
+        "proficiency": "Intermediate"
+      },
+      {
+        "skillName": "MongoDB",
+        "proficiency": "Expert"
+      },
+      {
+        "skillName": "MySQL",
+        "proficiency": "Expert"
+      }
+    ],
+    "education": [
+      {
+        "schoolName": "Sir C R Reddy College of Engineering",
+        "schoolLocation": "Eluru, Andhra Pradesh",
+        "degree": "Bachelor of Technology",
+        "stream": "Civil Engineering",
+        "startDate": "2019-08-25T00:00:00.000Z",
+        "endDate": "2023-04-30T00:00:00.000Z"
+      },
+      {
+        "schoolName": "Sri Deepthi Junior College",
+        "schoolLocation": "Proddatur, Andhra Pradesh",
+        "degree": "Intermediate(+2)",
+        "stream": "M.P.C",
+        "startDate": "2017-06-01",
+        "endDate": "2029-03-30"
+      }
+    ],
+    "workHistory": [
+      {
+        "jobTitle": "Full Stack Developer",
+        "company": "Tech Company",
+        "location": "Gachibowli, Hyderabad",
+        "responsibilities": [
+          "Frontend development",
+          "Backend development",
+          "RESTFULL api's"
+        ],
+        "startDate": "2024-07-15T00:00:00.000Z",
+        "endDate": null
+      }
+    ],
+    "awards": [
+      {
+        "awardName": "Certificate of exceptional bug finder",
+        "awardedBy": "XYZ Company Client",
+        "date": "2021-11-01"
+      }
+    ],
+    "volunteering": [
+      {
+        "organization": "Company XYZ",
+        "role": "Organizer",
+        "startDate": "2023-06-01",
+        "endDate": "2023-03-30"
+      }
+    ],
+    "activities": [
+      {
+        "involvements": "Participate the two times Zonal level of football tournament in my schooling time",
+        "achievements": "Won the first prize  Zonal level football game"
+      }
+    ],
+    "declaration": "I here by declare that the above information mentioned is correct up to my knowledge and I bear the responsibility for the correctness of the above mentioned particulars"
+  }

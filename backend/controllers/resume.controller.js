@@ -20,11 +20,11 @@ cloudinary.config({
 export const createResume = async (req, res, next) => {
     const { firstname, surname, profession, contact, skills, education, workHistory, awards, volunteering, activities, declaration } = req.body;
 
-    let imgUrl = null;
+    let img = null;
     if (req.file) {
         try {
             const result = await cloudinary.v2.uploader.upload(req.file.path);
-            imgUrl = result.secure_url;
+            img = result.secure_url;
         } catch (error) {
             return next(errorHandler(500, "Image upload failed..."));
         }
@@ -35,7 +35,7 @@ export const createResume = async (req, res, next) => {
     }
 
     try {
-        const resume = new Resume({ firstname, surname, profession, contact, skills, education, workHistory, imgUrl, awards, volunteering, activities, declaration });
+        const resume = new Resume({ firstname, surname, profession, contact, skills, education, workHistory, img, awards, volunteering, activities, declaration });
         await resume.save();
 
         const pdfPath = path.join(__dirname, '../uploads', `${resume._id}.pdf`);
@@ -64,11 +64,11 @@ export const updateResume = async (req, res, next) => {
 
         const { firstname, surname, profession, contact, skills, education, workHistory, awards, volunteering, activities, declaration } = req.body;
 
-        let imgUrl = resume.imgUrl;
+        let img = resume.img;
         if (req.file) {
             try {
                 const result = await cloudinary.v2.uploader.upload(req.file.path);
-                imgUrl = result.secure_url;
+                img = result.secure_url;
             } catch (error) {
                 return next(errorHandler(500, "Image upload failed..."));
             }
@@ -108,7 +108,7 @@ export const updateResume = async (req, res, next) => {
             resume.declaration = declaration;
         }
 
-        resume.imgUrl = imgUrl;
+        resume.img = img;
         await resume.save();
 
         res.status(200).json({

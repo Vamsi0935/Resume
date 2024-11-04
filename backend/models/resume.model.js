@@ -154,7 +154,7 @@ const ResumeSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        imgUrl: {
+        img: {
             type: String,
             required: false,
         },

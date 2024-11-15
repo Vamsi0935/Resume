@@ -6,39 +6,29 @@ import fs from "fs";
 import { fileURLToPath } from 'url';
 import * as htmlDocx from 'html-docx-js';
 import { generateDOCX } from "../utils/generateDOCX.js";
-import cloudinary from 'cloudinary';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-cloudinary.config({
-    cloud_name: "ResumeBuilder",
-    api_key: "782133944847463",
-    api_secret: "B8HN6_RfkviRfOjz7gT2jaRkZ54",
-});
-
 export const createResume = async (req, res, next) => {
-    const { firstname, surname, profession, contact, skills, education, workHistory, awards, volunteering, activities, declaration } = req.body;
+    const { basicInfo, workHistory = [], projects = [], education = [], achievement = [], summary, other } = req.body;
 
     let img = null;
     if (req.file) {
-        try {
-            const result = await cloudinary.v2.uploader.upload(req.file.path);
-            img = result.secure_url;
-        } catch (error) {
-            return next(errorHandler(500, "Image upload failed..."));
-        }
+        const imgPath = path.join(__dirname, '../uploads', req.file.filename);
+        img = imgPath;
     }
 
-    if (!firstname || !surname || !profession || !contact || !skills || !education || !workHistory || !awards || !volunteering || !activities || !declaration) {
+    if (!basicInfo || !summary || !other) {
         return next(errorHandler(400, "All fields are required..."));
     }
 
     try {
-        const resume = new Resume({ firstname, surname, profession, contact, skills, education, workHistory, img, awards, volunteering, activities, declaration });
+        const resume = new Resume({ basicInfo, workHistory, projects, education, achievement, summary, other, img });
         await resume.save();
 
-        const pdfPath = path.join(__dirname, '../uploads', `${resume._id}.pdf`);
+        const fileName = `${resume._id}.pdf`;
+        const pdfPath = path.join(__dirname, '../uploads', fileName);
         await generatePDF(resume, pdfPath);
 
         res.status(201).json({
@@ -62,51 +52,21 @@ export const updateResume = async (req, res, next) => {
             return next(errorHandler(404, "Resume not found..."));
         }
 
-        const { firstname, surname, profession, contact, skills, education, workHistory, awards, volunteering, activities, declaration } = req.body;
+        const { basicInfo, workHistory = [], projects = [], education = [], achievement = [], summary, other } = req.body;
 
         let img = resume.img;
         if (req.file) {
-            try {
-                const result = await cloudinary.v2.uploader.upload(req.file.path);
-                img = result.secure_url;
-            } catch (error) {
-                return next(errorHandler(500, "Image upload failed..."));
-            }
+            const imgPath = path.join(__dirname, '../uploads', req.file.filename);
+            img = imgPath;
         }
 
-        if (firstname) {
-            resume.firstname = firstname;
-        }
-        if (surname) {
-            resume.surname = surname;
-        }
-        if (profession) {
-            resume.profession = profession;
-        }
-        if (contact) {
-            resume.contact = contact;
-        }
-        if (skills) {
-            resume.skills = skills;
-        }
-        if (education) {
-            resume.education = education;
-        }
-        if (workHistory) {
-            resume.workHistory = workHistory;
-        }
-        if (awards) {
-            resume.awards = awards;
-        }
-        if (volunteering) {
-            resume.volunteering = volunteering;
-        }
-        if (activities) {
-            resume.activities = activities;
-        }
-        if (declaration) {
-            resume.declaration = declaration;
-        }
+        if (basicInfo) resume.basicInfo = basicInfo;
+        if (workHistory) resume.workHistory = workHistory;
+        if (projects) resume.projects = projects;
+        if (education) resume.education = education;
+        if (achievement) resume.achievement = achievement;
+        if (summary) resume.summary = summary;
+        if (other) resume.other = other;
 
         resume.img = img;
         await resume.save();
@@ -147,8 +107,11 @@ export const getResumeById = async (req, res, next) => {
         if (!resume) {
             return next(errorHandler(404, "Resume not found...."));
         }
-        const pdfPath = path.join(__dirname, '../uploads', `${resumeId}.pdf`);
-        generatePDF(resume, pdfPath);
+
+        const fileName = `${resume._id}.pdf`;
+        const pdfPath = path.join(__dirname, '../uploads', fileName);
+        await generatePDF(resume, pdfPath);
+
         res.status(200).json({
             success: true,
             message: "Resume retrieved successfully.",
@@ -175,7 +138,13 @@ export const getAllResumes = async (req, res, next) => {
 
 export const generatePdf = async (req, res, next) => {
     const resumeId = req.params.id;
-    const pdfPath = path.join(__dirname, "../uploads", `${resumeId}.pdf`);
+    const resume = await Resume.findById(resumeId);
+    if (!resume) {
+        return next(errorHandler(404, "Resume not found..."));
+    }
+
+    const fileName = `${resume._id}.pdf`;
+    const pdfPath = path.join(__dirname, "../uploads", fileName);
 
     res.download(pdfPath, (err) => {
         if (err) {
@@ -194,8 +163,10 @@ export const exportResume = async (req, res, next) => {
             return next(errorHandler(404, "Resume not found....."));
         }
 
+        const fileName = `${resume._id}`;
+
         if (format === 'pdf') {
-            const pdfPath = path.join(__dirname, "../uploads", `${resumeId}.pdf`);
+            const pdfPath = path.join(__dirname, "../uploads", `${fileName}.pdf`);
             await generatePDF(resume, pdfPath);
             return res.status(201).json({
                 success: true,
@@ -205,7 +176,7 @@ export const exportResume = async (req, res, next) => {
             });
         } else if (format === 'docx') {
             const html = generateDOCX(resume);
-            const docxPath = path.join(__dirname, "../uploads", `${resumeId}.docx`);
+            const docxPath = path.join(__dirname, "../uploads", `${fileName}.docx`);
 
             const docxBlob = htmlDocx.asBlob(html);
             fs.writeFileSync(docxPath, Buffer.from(await docxBlob.arrayBuffer()));

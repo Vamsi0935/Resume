@@ -1,11 +1,19 @@
 import mongoose from "mongoose";
 
-const contactSchema = new mongoose.Schema({
-    address: {
+const basicInfoSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true,
     },
-    phoneNumber: {
+    title: {
+        type: String,
+        required: true,
+    },
+    linkedin: {
+        type: String,
+        required: true,
+    },
+    github: {
         type: String,
         required: true,
     },
@@ -13,72 +21,67 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    websiteLinks: [
-        {
-            linkedIn: {
-                type: String,
-                required: false,
-            },
-            gitHub: {
-                type: String,
-                required: false,
-            }
-        }
-    ]
-});
-
-const skillsSchema = new mongoose.Schema({
-    skillName: {
+    phone: {
         type: String,
         required: true,
-    },
-    proficiency: {
-        type: String,
-        enum: ["Beginner", "Intermediate", "Expert"],
-        required: true,
-    },
-});
-
-const educationSchema = new mongoose.Schema({
-    schoolName: {
-        type: String,
-        required: true,
-    },
-    schoolLocation: {
-        type: String,
-        required: false,
-    },
-    degree: {
-        type: String,
-        required: false,
-    },
-    stream: {
-        type: String,
-        required: false,
-    },
-    startDate: {
-        type: Date,
-    },
-    endDate: {
-        type: Date,
-    },
+    }
 });
 
 const workHistorySchema = new mongoose.Schema({
-    jobTitle: {
+    title: {
         type: String,
         required: true,
     },
-    company: {
+    companyName: {
+        type: String,
+        required: true,
+    },
+    certificationLink: {
         type: String,
         required: true,
     },
     location: {
         type: String,
-        required: false,
+        required: true,
     },
-    responsibilities: {
-        type: [String],
+    startDate: {
+        type: Date,
+    },
+    endDate: {
+        type: Date,
+    },
+    points: {
+        type: String,
+        required: false,
+    }
+});
+
+const projectSchmea = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    link: {
+        type: String,
+        required: true,
+    },
+    overview: {
+        type: String,
+        required: true,
+    },
+    github: {
+        type: String,
+        required: true,
+    }
+});
+
+const educationSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    college: {
+        type: String,
         required: true,
     },
     startDate: {
@@ -89,86 +92,36 @@ const workHistorySchema = new mongoose.Schema({
     },
 });
 
-const awardSchema = new mongoose.Schema(
-    {
-        awardName: {
-            type: String,
-            required: false,
-        },
-        awardedBy: {
-            type: String,
-            required: false,
-        },
-        date: {
-            type: Date,
-            required: false,
-        }
+const achievementSchema = new mongoose.Schema({
+    points: {
+        type: String,
+        required: true,
     }
-)
-
-const volunteerSchema = new mongoose.Schema({
-    organization: {
-        type: String,
-        required: false,
-    },
-    role: {
-        type: String,
-        required: false,
-    },
-    startDate: {
-        type: Date,
-    },
-    endDate: {
-        type: Date,
-    },
 });
 
-const activitySchema = new mongoose.Schema(
-    {
-        involvements: {
-            type: String,
-            required: false,
-        },
-        achievements: {
-            type: String,
-            required: false,
-        },
+const summarySchema = new mongoose.Schema({
+    summary: {
+        type: String,
+        required: true,
     }
-)
+});
+
+const otherSchema = new mongoose.Schema({
+    other: {
+        type: String,
+        required: true,
+    }
+})
 
 const ResumeSchema = new mongoose.Schema(
     {
-        firstname: {
-            type: String,
-            required: true,
-        },
-        surname: {
-            type: String,
-            required: true,
-        },
-        profession: {
-            type: String,
-            required: true,
-        },
-        summary: {
-            type: String,
-            required: false,
-        },
-        img: {
-            type: String,
-            required: false,
-        },
-        contact: [contactSchema],
-        skills: [skillsSchema],
-        education: [educationSchema],
+        basicInfo: [basicInfoSchema],
         workHistory: [workHistorySchema],
-        awards: [awardSchema],
-        volunteering: [volunteerSchema],
-        activities: [activitySchema],
-        declaration: {
-            type: String,
-            required: true,
-        },
+        projects: [projectSchmea],
+        education: [educationSchema],
+        achievement: [achievementSchema],
+        summary: [summarySchema],
+        other: [otherSchema],
         createdAt: {
             type: Date,
             default: Date.now,

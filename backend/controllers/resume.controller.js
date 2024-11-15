@@ -11,7 +11,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const createResume = async (req, res, next) => {
-    const { basicInfo, workHistory = [], projects = [], education = [], achievement = [], summary, other } = req.body;
+    const {
+        basicInfo,
+        workHistory = [],
+        projects = [],
+        education = [],
+        achievement = [],
+        summary,
+        other
+    } = req.body;
 
     let img = null;
     if (req.file) {
@@ -52,7 +60,15 @@ export const updateResume = async (req, res, next) => {
             return next(errorHandler(404, "Resume not found..."));
         }
 
-        const { basicInfo, workHistory = [], projects = [], education = [], achievement = [], summary, other } = req.body;
+        const {
+            basicInfo,
+            workHistory = [],
+            projects = [],
+            education = [],
+            achievement = [],
+            summary,
+            other
+        } = req.body;
 
         let img = resume.img;
         if (req.file) {

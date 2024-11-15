@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const basicInfoSchema = new mongoose.Schema({
-    name: {
+    fullname: {
         type: String,
         required: true,
     },

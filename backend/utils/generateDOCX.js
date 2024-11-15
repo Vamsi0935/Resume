@@ -1,20 +1,42 @@
 export const generateDOCX = (resume) => {
     return `
-        <h1>${resume.firstname} ${resume.surname}</h1>
-        <h2>${resume.profession}</h2>
-        <h3>Contact: ${resume.contact}</h3>
-        <h4>Skills:</h4>
-        <ul>${resume.skills.map(skill => `<li>${skill}</li>`).join('')}</ul>
-        <h4>Education:</h4>
-        <ul>${resume.education.map(edu => `<li>${edu}</li>`).join('')}</ul>
-        <h4>Work History:</h4>
-        <ul>${resume.workHistory.map(job => `<li>${job}</li>`).join('')}</ul>
-        <h4>Awards:</h4>
-        <ul>${resume.awards.map(award => `<li>${award}</li>`).join('')}</ul>
-        <h4>Volunteering:</h4>
-        <ul>${resume.volunteering.map(volunteer => `<li>${volunteer}</li>`).join('')}</ul>
-        <h4>Activities:</h4>
-        <ul>${resume.activities.map(activities => `<li>${activities}</li>`).join('')}</ul>
-        <h4><u>Declaration</u>: <br/> ${resume.declaration}</h4>
+        <h1>${resume.basicInfo?.fullname}</h1>
+        <h2>${resume.profession || 'Not provided'}</h2>
+
+        <h3>Contact:</h3>
+        <p>Email: ${resume.basicInfo?.email || 'Not provided'}</p>
+        <p>Phone: ${resume.basicInfo?.phone || 'Not provided'}</p>
+        <p>Address: ${resume.basicInfo?.address || 'Not provided'}</p>
+
+        <h3>Summary:</h3>
+        <p>${resume.summary || 'No summary provided.'}</p>
+
+        <h3>Basic Info:</h3>
+        <ul>
+            ${Object.entries(resume.basicInfo || {}).map(([key, value]) => {
+        if (key !== 'firstname' && key !== 'surname') {
+            return `<li><strong>${key}:</strong> ${value}</li>`;
+        }
+        return '';
+    }).join('')}
+        </ul>
+
+        <h3>Work History:</h3>
+        <ul>${resume.workHistory?.map(job => `<li>${job}</li>`).join('') || 'No work history provided.'}</ul>
+
+        <h3>Projects:</h3>
+        <ul>${resume.projects?.map(project => `<li>${project}</li>`).join('') || 'No projects provided.'}</ul>
+
+        <h3>Education:</h3>
+        <ul>${resume.education?.map(edu => `<li>${edu}</li>`).join('') || 'No education provided.'}</ul>
+
+        <h3>Achievements:</h3>
+        <ul>${resume.achievement?.map(ach => `<li>${ach}</li>`).join('') || 'No achievements provided.'}</ul>
+
+        <h3>Other Information:</h3>
+        <p>${resume.other || 'No additional information provided.'}</p>
+
+        <h3><u>Declaration:</u></h3>
+        <p>${resume.declaration || 'No declaration provided.'}</p>
     `;
 };

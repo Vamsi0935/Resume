@@ -1,6 +1,6 @@
 export const generateDOCX = (resume) => {
     return `
-        <h1>${resume.basicInfo?.fullname}</h1>
+        <h1>${resume.basicInfo?.name}</h1>
         <h2>${resume.profession || 'Not provided'}</h2>
 
         <h3>Contact:</h3>
@@ -22,10 +22,10 @@ export const generateDOCX = (resume) => {
         </ul>
 
         <h3>Work History:</h3>
-        <ul>${resume.workHistory?.map(job => `<li>${job}</li>`).join('') || 'No work history provided.'}</ul>
+        <ul>${resume.workExp?.map(job => `<li>${job}</li>`).join('') || 'No work history provided.'}</ul>
 
-        <h3>Projects:</h3>
-        <ul>${resume.projects?.map(project => `<li>${project}</li>`).join('') || 'No projects provided.'}</ul>
+        <h3>project:</h3>
+        <ul>${resume.project?.map(project => `<li>${project}</li>`).join('') || 'No project provided.'}</ul>
 
         <h3>Education:</h3>
         <ul>${resume.education?.map(edu => `<li>${edu}</li>`).join('') || 'No education provided.'}</ul>

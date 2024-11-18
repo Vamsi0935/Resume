@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const basicInfoSchema = new mongoose.Schema({
-    fullname: {
+    name: {
         type: String,
         required: true,
     },
@@ -27,7 +27,7 @@ const basicInfoSchema = new mongoose.Schema({
     }
 });
 
-const workHistorySchema = new mongoose.Schema({
+const workExpSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -52,11 +52,11 @@ const workHistorySchema = new mongoose.Schema({
     },
     points: {
         type: String,
-        required: false,
+        required: true,
     }
 });
 
-const projectSchmea = new mongoose.Schema({
+const projectchmea = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -116,8 +116,8 @@ const otherSchema = new mongoose.Schema({
 const ResumeSchema = new mongoose.Schema(
     {
         basicInfo: [basicInfoSchema],
-        workHistory: [workHistorySchema],
-        projects: [projectSchmea],
+        workExp: [workExpSchema],
+        project: [projectchmea],
         education: [educationSchema],
         achievement: [achievementSchema],
         summary: [summarySchema],

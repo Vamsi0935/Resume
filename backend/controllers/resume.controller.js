@@ -13,8 +13,8 @@ const __dirname = path.dirname(__filename);
 export const createResume = async (req, res, next) => {
     const {
         basicInfo,
-        workHistory = [],
-        projects = [],
+        workExp = [],
+        project = [],
         education = [],
         achievement = [],
         summary,
@@ -32,7 +32,7 @@ export const createResume = async (req, res, next) => {
     }
 
     try {
-        const resume = new Resume({ basicInfo, workHistory, projects, education, achievement, summary, other, img });
+        const resume = new Resume({ basicInfo, workExp, project, education, achievement, summary, other, img });
         await resume.save();
 
         const fileName = `${resume._id}.pdf`;
@@ -62,8 +62,8 @@ export const updateResume = async (req, res, next) => {
 
         const {
             basicInfo,
-            workHistory = [],
-            projects = [],
+            workExp = [],
+            project = [],
             education = [],
             achievement = [],
             summary,
@@ -77,8 +77,8 @@ export const updateResume = async (req, res, next) => {
         }
 
         if (basicInfo) resume.basicInfo = basicInfo;
-        if (workHistory) resume.workHistory = workHistory;
-        if (projects) resume.projects = projects;
+        if (workExp) resume.workExp = workExp;
+        if (project) resume.project = project;
         if (education) resume.education = education;
         if (achievement) resume.achievement = achievement;
         if (summary) resume.summary = summary;

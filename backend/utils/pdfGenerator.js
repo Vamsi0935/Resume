@@ -5,8 +5,8 @@ export const generatePDF = (resume, pdfPath) => {
     const doc = new PDFDocument();
     doc.pipe(fs.createWriteStream(pdfPath));
 
-    const { fullname } = resume.basicInfo || {};
-    doc.fontSize(25).text(`${fullname}`, { align: 'center' });
+    const { name } = resume.basicInfo || {};
+    doc.fontSize(25).text(`${name}`, { align: 'center' });
     doc.moveDown();
 
     if (resume.summary) {
@@ -25,17 +25,17 @@ export const generatePDF = (resume, pdfPath) => {
         doc.moveDown();
     }
 
-    const workHistory = resume.workHistory || [];
-    if (workHistory.length > 0) {
+    const workExp = resume.workExp || [];
+    if (workExp.length > 0) {
         doc.fontSize(18).text('Work History:', { underline: true });
-        workHistory.forEach(job => doc.fontSize(16).text(`- ${job}`));
+        workExp.forEach(job => doc.fontSize(16).text(`- ${job}`));
         doc.moveDown();
     }
 
-    const projects = resume.projects || [];
-    if (projects.length > 0) {
-        doc.fontSize(18).text('Projects:', { underline: true });
-        projects.forEach(project => doc.fontSize(16).text(`- ${project}`));
+    const project = resume.project || [];
+    if (project.length > 0) {
+        doc.fontSize(18).text('project:', { underline: true });
+        project.forEach(project => doc.fontSize(16).text(`- ${project}`));
         doc.moveDown();
     }
 
